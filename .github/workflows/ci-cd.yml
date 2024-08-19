@@ -8,10 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build Docker image
-      run: docker build -t CI-CD-Deployement .
+      run: docker build -t deployement .
     - name: Test application
       run: |
-        docker run --name test-container -d -p 8080:80 CI-CD-Deployement:${{ github.sha }}
+        docker run --name test-container -d -p 8080:80 deployement:${{ github.sha }}
         sleep 5
         curl http://localhost:8080 | grep "Hello, CI/CD!"
         docker stop test-container
