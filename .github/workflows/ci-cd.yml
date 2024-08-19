@@ -8,10 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build Docker image
-      run: docker build -t myapp .
+      run: docker build -t CI-CD-Deployement .
     - name: Test application
       run: |
-        docker run --name test-container -d -p 8080:80 myapp:${{ github.sha }}
+        docker run --name test-container -d -p 8080:80 CI-CD-Deployement:${{ github.sha }}
         sleep 5
         curl http://localhost:8080 | grep "Hello, CI/CD!"
         docker stop test-container
@@ -22,5 +22,5 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push to Docker Hub
       run: |
-        docker tag myapp:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/myapp:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        docker tag CI-CD-Deployement:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/CI-CD-Deployement:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/CI-CD-Deployement:latest
